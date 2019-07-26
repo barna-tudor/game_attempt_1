@@ -51,7 +51,7 @@ void initialize(int ball_ammount, ball[] a)
     a[i].y=random(a[i].radius+1, height-a[i].radius-1);
     a[i].speedX=random(-3, 3);
     a[i].speedY=random(-3, 3);
-    a[i].c=color(60, 0, 100, 64);
+    a[i].c=color(random(30,80), 0, random(50,120), 120);
   }
 }
 

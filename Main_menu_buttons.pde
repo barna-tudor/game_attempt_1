@@ -9,7 +9,7 @@ void menu_background()
     {
       if (dist(a[i].x, a[i].y, a[j].x, a[j].y)<(width/2+height/2)*0.065)
       {
-        stroke(60, 0, 100, int(map(dist(a[i].x, a[i].y, a[j].x, a[j].y), 0, (width/2+height/2)*0.065, 127, 0)));
+        stroke(red(lerpColor(a[i].c,a[j].c,0.5)),green(lerpColor(a[i].c,a[j].c,0.5)),blue(lerpColor(a[i].c,a[j].c,0.5)), int(map(dist(a[i].x, a[i].y, a[j].x, a[j].y), 0, (width/2+height/2)*0.065, 200, 0)));
         line(a[i].x, a[i].y, a[j].x, a[j].y);
       }
     }

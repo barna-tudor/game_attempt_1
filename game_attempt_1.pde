@@ -18,7 +18,7 @@ void setup()
   brickHeight=height/4/brickAmmountHeight;
   declareWall(wall);
   initializeWall(wall);
-  font=loadFont("Georgia-Italic-48.vlw");
+  font=loadFont("Georgia-Italic-64.vlw");
 }
 
 void draw()
