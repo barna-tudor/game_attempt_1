@@ -4,6 +4,7 @@ int brickWidth;
 int brickHeight;
 int brickAmmountWidth;
 int brickAmmountHeight;
+
 void setup()
 {
   //size(800,600);
@@ -19,6 +20,7 @@ void setup()
   initializeWall(wall);
   font=loadFont("Georgia-Italic-48.vlw");
 }
+
 void draw()
 {
   background(255);
@@ -28,16 +30,17 @@ void draw()
     Draw_Button_BG();
     Draw_Play();
     Draw_Quit();
-  }
-  else
+  } else
   {
+    drawBrickBackground();
     drawBricks(wall);
   }
 }
+
 void keyPressed()
 {
-  if(keyCode==SHIFT)
+  if (keyCode==SHIFT)
   {
-     game_start=false; 
+    game_start=false;
   }
 }
