@@ -1,3 +1,5 @@
+
+
 public class Projectile
 {
   int pozXProjectile, pozYProjectile;
@@ -8,20 +10,21 @@ public class Projectile
 public class Brick
 {
   int pozX, pozY;
-  float brickWidth, brickHeight;
+  //int brickWidth, brickHeight;
   color brickColor;
   boolean destroyed=false;
 }
-Brick[][] wall=new Brick[(width/2)/10][(height/4)/3];
-void declareWall()
+
+void declareWall(Brick[][] wall)
 {
-  for (int i=0; i<(width/2)/10; i++)
+  for (int i=0; i<brickAmmountWidth; i++)
   {
-    for (int j=0; j<(height/4)/3; j++)
+    for (int j=0; j<brickAmmountHeight; j++)
     {
       wall[i][j]=new Brick();
-      wall[i][j].brickWidth=width/2/((width/2)/10);
-      wall[i][j].brickHeight=height/4/((height/4)/3);
+      //wall[i][j].brickWidth=brickWidth;
+      //wall[i][j].brickHeight=brickHeight;
+      wall[i][j].brickColor=color(random(100, 255), random(100, 255), random(100, 255), 255);
     }
   }
 }
@@ -29,12 +32,32 @@ void initializeWall(Brick[][] a)
 {
   pushMatrix();
   translate(width/4, 0);
-  for (int i=0; i<width/2; i++)
+  for (int i=0; i<brickAmmountWidth; i++)
   {
-    for (int j=0; j<height/4; j++)
+    for (int j=0; j<brickAmmountHeight; j++)
     {
-      a[i][j].pozX=i;
-      a[i][j].pozX=j;
+      a[i][j].pozX=i*brickWidth;
+      a[i][j].pozY=j*brickHeight;
+      
     }
   }
+  popMatrix();
+}
+void drawBricks(Brick[][] wall)
+{
+  rectMode(CORNER);
+  pushMatrix();
+  translate(width/4, 0);
+  for (int i=0; i<brickAmmountWidth; i++)
+  {
+    for (int j=0; j<brickAmmountHeight; j++)
+    {
+      if (!wall[i][j].destroyed)
+      {
+        fill(wall[i][j].brickColor, 200);
+        rect(wall[i][j].pozX, wall[i][j].pozY, brickWidth,brickHeight);
+      }
+    }
+  }
+  popMatrix();
 }
