@@ -5,9 +5,10 @@ int brickWidth;
 int brickHeight;
 int brickAmmountWidth;
 int brickAmmountHeight;
-int destroyedI;
-int destroyedJ;
 Projectile bullet=new Projectile();
+int padX;
+int padY;
+int padWidth, padHeight;
 void setup()
 {
   //size(800, 600);
@@ -23,6 +24,9 @@ void setup()
   initializeWall(wall);
   initializeProjectile(bullet);
   font=loadFont("Georgia-Italic-64.vlw");
+  padHeight=height/50;
+  padWidth=width/15;
+  padY=height-int(padHeight*1.5);
 }
 
 void draw()
@@ -40,7 +44,9 @@ void draw()
     drawBricks(wall);
     drawProjectile(bullet);
     updateProjectile(bullet);
-    if (bullet.pozYProjectile<height/3)
+    updatePad();
+    drawPad();
+    if (bullet.pozYProjectile<height/3&&bullet.projectileSpeedY<0)
       for (int i=0; i<brickAmmountHeight; i++)
       {
         for (int j=0; j<brickAmmountWidth; j++)

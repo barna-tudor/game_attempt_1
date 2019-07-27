@@ -41,13 +41,12 @@ void initializeWall(Brick[][] a)
       }
     }
   }
-
 }
 
 void drawBricks(Brick[][] wall)
 {
   rectMode(CORNER);
-  
+
   for (int i=0; i<brickAmmountHeight; i++)
   {
     for (int j=0; j<brickAmmountWidth; j++)
@@ -59,7 +58,6 @@ void drawBricks(Brick[][] wall)
       }
     }
   }
-  
 }
 
 void drawBrickBackground()
@@ -132,7 +130,7 @@ boolean projectileHit(float projectileX, float projectileY, float projectileRadi
   else if (projectileX > brickX+brickWidth) testX = brickX+brickWidth;     // right edge
   if (projectileY < brickY)         testY = brickY;                        // top edge
   else if (projectileY > brickY+brickHeight) testY = brickY+brickHeight;   // bottom edge
-  float distance = dist(testX,testY,projectileX,projectileY);
+  float distance = dist(testX, testY, projectileX, projectileY);
   if (distance <= projectileRadius)
   {
     return true;
@@ -154,7 +152,6 @@ void updateWall(int i, int j)
         bullet.projectileSpeedY=-bullet.projectileSpeedY;
       }
       wall[i][j].destroyed=true;
-      destroyedI=i;destroyedJ=j;
       if (i>0)
       {
         wall[i-1][j].open=true;
@@ -173,4 +170,17 @@ void updateWall(int i, int j)
       }
     }
   }
+}
+void updatePad()
+{
+  padX=constrain(mouseX-padWidth/2, width/4, 3*width/4-padWidth);
+  if (bullet.pozYProjectile>height-3*bullet.projectileRadius)
+    if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, padX, padY))
+    {
+      bullet.projectileSpeedY=-bullet.projectileSpeedY;
+    }
+}
+void drawPad()
+{
+  rect(padX, padY, padWidth, padHeight);
 }
