@@ -5,6 +5,8 @@ int brickWidth;
 int brickHeight;
 int brickAmmountWidth;
 int brickAmmountHeight;
+int destroyedI;
+int destroyedJ;
 Projectile bullet=new Projectile();
 void setup()
 {
@@ -14,7 +16,7 @@ void setup()
   initialize(ball_ammount, a);
   brickAmmountWidth=(width/2)/100;
   brickAmmountHeight=(height/4)/35;
-  wall=new Brick[brickAmmountWidth][brickAmmountHeight];
+  wall=new Brick[brickAmmountHeight][brickAmmountWidth];
   brickWidth=width/2/brickAmmountWidth;
   brickHeight=height/4/brickAmmountHeight;
   declareWall(wall);
@@ -38,13 +40,14 @@ void draw()
     drawBricks(wall);
     drawProjectile(bullet);
     updateProjectile(bullet);
-    for (int i=0; i<brickAmmountWidth; i++)
-    {
-      for (int j=0; j<brickAmmountHeight; j++)
+    if (bullet.pozYProjectile<height/3)
+      for (int i=0; i<brickAmmountHeight; i++)
       {
-        updateWall(i, j);
+        for (int j=0; j<brickAmmountWidth; j++)
+        {
+          updateWall(i, j);
+        }
       }
-    }
   }
 }
 

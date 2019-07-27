@@ -16,9 +16,9 @@ public class Brick
 
 void declareWall(Brick[][] wall)
 {
-  for (int i=0; i<brickAmmountWidth; i++)
+  for (int i=0; i<brickAmmountHeight; i++)
   {
-    for (int j=0; j<brickAmmountHeight; j++)
+    for (int j=0; j<brickAmmountWidth; j++)
     {
       wall[i][j]=new Brick();
       wall[i][j].brickColor=color(random(40, 80), 0, random(20, 255), 255);
@@ -28,32 +28,29 @@ void declareWall(Brick[][] wall)
 
 void initializeWall(Brick[][] a)
 {
-  pushMatrix();
-  translate(width/4, 0);
-  for (int i=0; i<brickAmmountWidth; i++)
+  for (int i=0; i<brickAmmountHeight; i++)
   {
-    for (int j=0; j<brickAmmountHeight; j++)
+    for (int j=0; j<brickAmmountWidth; j++)
     {
-      a[i][j].pozX=i*brickWidth;
-      a[i][j].pozY=j*brickHeight;
+      a[i][j].pozY=i*brickHeight;
+      a[i][j].pozX=width/4+j*brickWidth;
       a[i][j].open=false;
-      if (j==brickAmmountHeight-1)
+      if (i==brickAmmountHeight-1)
       {
         a[i][j].open=true;
       }
     }
   }
-  popMatrix();
+
 }
 
 void drawBricks(Brick[][] wall)
 {
   rectMode(CORNER);
-  pushMatrix();
-  translate(width/4, 0);
-  for (int i=0; i<brickAmmountWidth; i++)
+  
+  for (int i=0; i<brickAmmountHeight; i++)
   {
-    for (int j=0; j<brickAmmountHeight; j++)
+    for (int j=0; j<brickAmmountWidth; j++)
     {
       if (!wall[i][j].destroyed)
       {
@@ -62,7 +59,7 @@ void drawBricks(Brick[][] wall)
       }
     }
   }
-  popMatrix();
+  
 }
 
 void drawBrickBackground()
@@ -157,17 +154,22 @@ void updateWall(int i, int j)
         bullet.projectileSpeedY=-bullet.projectileSpeedY;
       }
       wall[i][j].destroyed=true;
+      destroyedI=i;destroyedJ=j;
       if (i>0)
       {
         wall[i-1][j].open=true;
       }
-      if (j<brickAmmountHeight-1)
+      if (j<brickAmmountWidth-1)
       {
         wall[i][j+1].open=true;
       }
       if (j>0)
       {
         wall[i][j-1].open=true;
+      }
+      if (i<brickAmmountHeight-1)
+      {
+        wall[i+1][j].open=true;
       }
     }
   }
