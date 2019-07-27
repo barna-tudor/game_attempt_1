@@ -75,17 +75,8 @@ void initializeProjectile(Projectile bullet)
   bullet.pozYProjectile=height/2;
   bullet.projectileRadius=brickWidth/8;
   int x=int(random(-4, 5));
-  while (x==0)
-  {
-    x=int(random(-4, 5));
-  }
-  bullet.projectileSpeedX=x;
-  x=int(random(-4, 5));
-  while (x==0)
-  {
-    x=int(random(-4, 5));
-  }
-  bullet.projectileSpeedY=x;
+  bullet.projectileSpeedX=6;
+  bullet.projectileSpeedY=6;
 }
 void drawProjectile(Projectile bullet)
 {
@@ -141,32 +132,35 @@ void updateWall(int i, int j)
 {
   if (wall[i][j].open)
   {
-    if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, wall[i][j].pozX, wall[i][j].pozY))
+    if (!wall[i][j].destroyed)
     {
-      if (bullet.pozXProjectile<wall[i][j].pozX && bullet.projectileSpeedX>0 || bullet.pozXProjectile>wall[i][j].pozX+brickWidth && bullet.projectileSpeedX<0)
+      if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, wall[i][j].pozX, wall[i][j].pozY))
       {
-        bullet.projectileSpeedX=-bullet.projectileSpeedX;
-      }
-      if (bullet.pozYProjectile<wall[i][j].pozY && bullet.projectileSpeedY>0 || bullet.pozXProjectile>wall[i][j].pozY+brickHeight && bullet.projectileSpeedY<0)
-      {
-        bullet.projectileSpeedY=-bullet.projectileSpeedY;
-      }
-      wall[i][j].destroyed=true;
-      if (i>0)
-      {
-        wall[i-1][j].open=true;
-      }
-      if (j<brickAmmountWidth-1)
-      {
-        wall[i][j+1].open=true;
-      }
-      if (j>0)
-      {
-        wall[i][j-1].open=true;
-      }
-      if (i<brickAmmountHeight-1)
-      {
-        wall[i+1][j].open=true;
+        if (bullet.pozXProjectile<wall[i][j].pozX && bullet.projectileSpeedX>0 || bullet.pozXProjectile>wall[i][j].pozX+brickWidth && bullet.projectileSpeedX<0)
+        {
+          bullet.projectileSpeedX=-bullet.projectileSpeedX;
+        }
+        if (bullet.pozYProjectile<wall[i][j].pozY && bullet.projectileSpeedY>0 || bullet.pozXProjectile>wall[i][j].pozY+brickHeight && bullet.projectileSpeedY<0)
+        {
+          bullet.projectileSpeedY=-bullet.projectileSpeedY;
+        }
+        wall[i][j].destroyed=true;
+        if (i>0)
+        {
+          wall[i-1][j].open=true;
+        }
+        if (j<brickAmmountWidth-1)
+        {
+          wall[i][j+1].open=true;
+        }
+        if (j>0)
+        {
+          wall[i][j-1].open=true;
+        }
+        if (i<brickAmmountHeight-1)
+        {
+          wall[i+1][j].open=true;
+        }
       }
     }
   }
@@ -178,8 +172,34 @@ void updatePad()
     if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, padX, padY))
     {
       bullet.projectileSpeedY=-bullet.projectileSpeedY;
+      if (keyPressed)
+      {
+        if (key=='w')
+        {
+          if (bullet.projectileSpeedY>0)
+          {
+            bullet.projectileSpeedY++;
+          } else bullet.projectileSpeedY--;
+          if (bullet.projectileSpeedX>0)
+          {
+            bullet.projectileSpeedX++;
+          } else bullet.projectileSpeedX--;
+        }
+        if (key=='s')
+        {
+          if (bullet.projectileSpeedY<0)
+          {
+            bullet.projectileSpeedY++;
+          } else bullet.projectileSpeedY--;
+          if (bullet.projectileSpeedX<0)
+          {
+            bullet.projectileSpeedX++;
+          } else bullet.projectileSpeedX--;
+        }
+      }
     }
 }
+
 void drawPad()
 {
   rect(padX, padY, padWidth, padHeight);
