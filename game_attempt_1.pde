@@ -11,8 +11,8 @@ int padY;
 int padWidth, padHeight;
 void setup()
 {
-  //size(800, 600);
-  fullScreen();
+  size(800, 600);
+  //fullScreen();
   strokeWeight(5);
   initialize(ball_ammount, a);
   brickAmmountWidth=(width/2)/100;
@@ -34,12 +34,14 @@ void draw()
   background(200);
   if (!game_start)
   {
+    cursor();
     menu_background();
     Draw_Button_BG();
     Draw_Play();
     Draw_Quit();
   } else
   {
+    noCursor();
     drawBrickBackground();
     drawBricks(wall);
     drawProjectile(bullet);

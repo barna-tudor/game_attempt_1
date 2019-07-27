@@ -1,3 +1,4 @@
+
 public class Projectile
 {
   int pozXProjectile, pozYProjectile;
@@ -54,7 +55,7 @@ void drawBricks(Brick[][] wall)
       if (!wall[i][j].destroyed)
       {
         fill(wall[i][j].brickColor, 200);
-        rect(wall[i][j].pozX, wall[i][j].pozY, brickWidth, brickHeight, 10);
+        rect(wall[i][j].pozX, wall[i][j].pozY, brickWidth, brickHeight);
       }
     }
   }
@@ -112,7 +113,7 @@ void updateProjectile(Projectile bullet)
   //bullet.pozXProjectile=mouseX;
   //bullet.pozYProjectile=mouseY;
 }
-boolean projectileHit(float projectileX, float projectileY, float projectileRadius, int brickX, int brickY)
+boolean projectileHit(float projectileX, float projectileY, float projectileRadius, int brickX, int brickY, float brickWidth, float brickHeight)
 {
   float testX = projectileX;
   float testY = projectileY;
@@ -134,7 +135,7 @@ void updateWall(int i, int j)
   {
     if (!wall[i][j].destroyed)
     {
-      if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, wall[i][j].pozX, wall[i][j].pozY))
+      if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, wall[i][j].pozX, wall[i][j].pozY, brickWidth, brickHeight))
       {
         if (bullet.pozXProjectile<wall[i][j].pozX && bullet.projectileSpeedX>0 || bullet.pozXProjectile>wall[i][j].pozX+brickWidth && bullet.projectileSpeedX<0)
         {
@@ -149,17 +150,17 @@ void updateWall(int i, int j)
         {
           wall[i-1][j].open=true;
         }
-        if (j<brickAmmountWidth-1)
+        if (i<brickAmmountHeight-1)
         {
-          wall[i][j+1].open=true;
+          wall[i+1][j].open=true;
         }
         if (j>0)
         {
           wall[i][j-1].open=true;
         }
-        if (i<brickAmmountHeight-1)
+        if (j<brickAmmountWidth-1)
         {
-          wall[i+1][j].open=true;
+          wall[i][j+1].open=true;
         }
       }
     }
@@ -169,9 +170,10 @@ void updatePad()
 {
   padX=constrain(mouseX-padWidth/2, width/4, 3*width/4-padWidth);
   if (bullet.pozYProjectile>height-3*bullet.projectileRadius)
-    if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, padX, padY))
+    if (projectileHit(bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, padX, padY, padWidth, padHeight))
     {
       bullet.projectileSpeedY=-bullet.projectileSpeedY;
+      bullet.pozYProjectile=padY-bullet.projectileRadius;
       if (keyPressed)
       {
         if (key=='w')
