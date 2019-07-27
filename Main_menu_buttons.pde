@@ -1,5 +1,5 @@
 PFont font;
-boolean game_start=false;
+
 
 void menu_background()
 {

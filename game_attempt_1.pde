@@ -1,3 +1,4 @@
+boolean game_start=false;
 int ball_ammount=75;
 Brick[][] wall;
 int brickWidth;
@@ -7,7 +8,7 @@ int brickAmmountHeight;
 Projectile bullet=new Projectile();
 void setup()
 {
-  //size(800,600);
+  //size(800, 600);
   fullScreen();
   strokeWeight(5);
   initialize(ball_ammount, a);
@@ -37,8 +38,16 @@ void draw()
     drawBricks(wall);
     drawProjectile(bullet);
     updateProjectile(bullet);
+    for (int i=0; i<brickAmmountWidth; i++)
+    {
+      for (int j=0; j<brickAmmountHeight; j++)
+      {
+        updateWall(i, j);
+      }
+    }
   }
 }
+
 
 void keyPressed()
 {
@@ -50,27 +59,3 @@ void keyPressed()
     initializeProjectile(bullet);
   }
 }
-//update wall  : 
-//if (wall[i][j].open)
-//  {
-//    if (projectileHit(wall, bullet.pozXProjectile, bullet.pozYProjectile, bullet.projectileRadius, wall[i][j].pozX, wall[i][j].pozY, i, j))
-//    {
-//      if (bullet.pozXProjectile<wall[i][j].pozX)
-//      {
-//        bullet.projectileSpeedX=-bullet.projectileSpeedX;
-//      }
-//    }
-//  }
-//wall[i][j].destroyed=true;
-//if(i>0)
-//{
-//  wall[i-1][j].open=true;
-//}
-//if(j<brickAmmountWidth-1)
-//{
-//  wall[i][j+1].open=true;
-//}
-//if(j>0)
-//{
-//  wall[i][j-1].open=true;
-//}
